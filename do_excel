@@ -1,0 +1,34 @@
+import datetime
+import pandas as pd
+
+excel_path=r"C:\Users\lyqly\Desktop\lib.xlsx"#只有xlsx可写
+
+book_info = ["索引", "名称", "地址", "类别", "数量", "价格", "入库时间", "归还时间", "次数", "状态"]
+book_info1 = [0, "明朝那些事", "三牌楼", "人文", 1, 22, datetime.datetime(2018, 1, 1), datetime.datetime(2018, 1, 1), 1, "可借"]
+book_info2 = [1, "基督山伯爵", "三牌楼", "人文", 1, 22, datetime.datetime(2018, 1, 1), datetime.datetime(2018, 1, 1), 2, "可借"]
+book_info3 = [2, "三体", "三牌楼", "人文", 1, 22, datetime.datetime(2018, 1, 1), datetime.datetime(2018, 1, 1), 3, "可借"]
+
+all_book_info=[book_info,book_info1,book_info2,book_info3]
+
+def write_excel(input_info):
+    all_book_info_pd=pd.DataFrame(input_info)#转化格式为dataframe
+    all_book_info_pd.to_excel(excel_path)
+    #print("all is right")
+
+def read_excel():
+    df=pd.read_excel(excel_path)#格式为dataframe,切片可行
+    #类型转换：一点点切片，一点点添加
+    excel_read=[]
+    for _excel_index in range(len(df)):#横行切片
+        excel_read_one=[]
+        for _index,_data_index in enumerate(df.iloc[_excel_index,:]):#横向的坐标信息
+            if _index!=0:#去除不要的第一个序号
+                excel_read_one.append(_data_index)
+        excel_read.append(excel_read_one)
+    return excel_read
+
+            #print(_data_index)
+
+if __name__=='__main__':
+    write_excel(all_book_info)
+    read_excel()
